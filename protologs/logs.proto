@@ -16,5 +16,6 @@ service LogTestData{
 message Log{
 	string blockID = 1;
 	google.protobuf.Duration request_delay = 2;
+	Tempo desde que peço o request até que começo a receber o bloco
 	bool blockDelivered = 3;
 }
