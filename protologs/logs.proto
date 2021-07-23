@@ -2,21 +2,21 @@ syntax = "proto3";
 
 option go_package = "github.com/Matias-Correia/go-test_server/protologs";
 
-import "google/protobuf/empty.proto";
-import "google/protobuf/duration.proto";
 
 package protologs;
 
 // Log service defenition
 service LogTestData{
 	//Sends 
-	rpc SendLogs (Log) returns (google.protobuf.Empty){}
+	rpc SendLogs (Log) returns (Empty){}
 }
+
+message Empty{}
 
 // Log definition
 //Tempo desde que peço o request até que começo a receber o bloco
 message Log{
 	string blockID = 1;
-	google.protobuf.Duration request_delay = 2;
+	int64 request_delay = 2;
 	bool blockDelivered = 3;
 }

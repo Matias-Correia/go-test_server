@@ -7,7 +7,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -20,7 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LogTestDataClient interface {
 	//Sends
-	SendLogs(ctx context.Context, in *Log, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SendLogs(ctx context.Context, in *Log, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type logTestDataClient struct {
@@ -31,8 +30,8 @@ func NewLogTestDataClient(cc grpc.ClientConnInterface) LogTestDataClient {
 	return &logTestDataClient{cc}
 }
 
-func (c *logTestDataClient) SendLogs(ctx context.Context, in *Log, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *logTestDataClient) SendLogs(ctx context.Context, in *Log, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/protologs.LogTestData/SendLogs", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -45,7 +44,7 @@ func (c *logTestDataClient) SendLogs(ctx context.Context, in *Log, opts ...grpc.
 // for forward compatibility
 type LogTestDataServer interface {
 	//Sends
-	SendLogs(context.Context, *Log) (*emptypb.Empty, error)
+	SendLogs(context.Context, *Log) (*Empty, error)
 	mustEmbedUnimplementedLogTestDataServer()
 }
 
@@ -53,7 +52,7 @@ type LogTestDataServer interface {
 type UnimplementedLogTestDataServer struct {
 }
 
-func (UnimplementedLogTestDataServer) SendLogs(context.Context, *Log) (*emptypb.Empty, error) {
+func (UnimplementedLogTestDataServer) SendLogs(context.Context, *Log) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendLogs not implemented")
 }
 func (UnimplementedLogTestDataServer) mustEmbedUnimplementedLogTestDataServer() {}
