@@ -8,8 +8,6 @@ import (
 
 	"google.golang.org/grpc"
 	pb "github.com/Matias-Correia/go-test_server/protologs"
-	durationpb "google.golang.org/protobuf/types/known/durationpb"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 const (
@@ -22,18 +20,19 @@ type server struct {
 }
 
 // LogTestData implements protologs.LogTestData
-func (s *server) LogTestData(ctx context.Context, in *pb.Log) (*pb.google.protobuf.Empty, error) {
+func (s *server) SendLogs(ctx context.Context, in *pb.Log) (*pb.Empty, error) {
 	log.Printf("Received: %v", in.GetBlockID())
 	log.Printf("Was delivered?: %v", in.GetBlockDelivered())
-	log.Printf("With Delay: %v", in.GetRequestDelay())
-	
-	RecordReceivedLogs(in.GetBlockID, in.GetRequestDelay, in.GetBlockDelivered)
+	log.Printf("Request Delay: %v", in.GetRequestDelay())
+	log.Printf("Block Delay: %v", in.GetBlockDelay())
 
-	return *emptypb.Empty, nil
+	RecordReceivedLogs(in.GetBlockID(), time.Duration(in.GetRequestDelay()) * time.Millisecond, in.GetBlockDelivered())
+
+	return &(pb.Empty{}), nil
 }
 
 // Save info in the BD
-func RecordReceivedLogs(blockId string, delay time.Duration, bool blockDelivered){
+func RecordReceivedLogs(blockId string, delay time.Duration, blockDelivered bool){
 	
 }
 

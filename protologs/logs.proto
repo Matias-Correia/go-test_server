@@ -14,9 +14,9 @@ service LogTestData{
 message Empty{}
 
 // Log definition
-//Tempo desde que peço o request até que começo a receber o bloco
 message Log{
 	string blockID = 1;
 	int64 request_delay = 2;
-	bool blockDelivered = 3;
+	int64 block_delay = 3;
+	bool blockDelivered = 4;
 }

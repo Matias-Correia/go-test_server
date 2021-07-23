@@ -28,13 +28,12 @@ func main() {
 	name := defaultName
 	if len(os.Args) > 1 {
 		name = os.Args[1]
-		delay = os.Args[2]
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.LogTestData(ctx, &pb.Log{blockID: name, request_delay: delay, blockDelivered: true})
+	_, err = c.SendLogs(ctx, &pb.Log{BlockID: name, RequestDelay: 100, BlockDelay:200, BlockDelivered: true})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-	log.Printf("Greeting: %s", r.GetMessage())
+	
 }
