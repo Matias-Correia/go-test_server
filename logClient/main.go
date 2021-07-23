@@ -38,4 +38,3 @@ func main() {
 	}
 	log.Printf("Greeting: %s", r.GetMessage())
 }
-
