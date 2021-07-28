@@ -1,0 +1,27 @@
+version: "3"
+
+volumes:
+  mysql_data:
+    driver: local
+
+services:
+  app:
+    build: 
+      context: server/
+    ports:
+      - "50051:50051"
+  db:
+    build:
+      context: logdb/
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: logs
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: raiz
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "--silent" ]
