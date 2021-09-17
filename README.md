@@ -5,7 +5,7 @@ Go Server: Record Logs
 
 * Production
     * The IP to be used is something like 192.x.x.x ( e.g. 192.168.1.100)
-    * Add in `/etc/hosts` the entry `192.x.x.x	ses.pt`
+    * Add in `/etc/hosts` the entry `192.x.x.x	test.pt`
     * Launching:
        ```shell
        docker-compose up --build
