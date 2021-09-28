@@ -18,13 +18,13 @@ const (
 	port = ":50051"
 )
 
-// server is used to implement helloworld.GreeterServer.
+// server is used to implement protologs.server.
 type server struct {
 	pb.UnimplementedLogTestDataServer
 	database sql.DB
 }
 
-// LogTestData implements protologs.LogTestData
+// SendLogs implements protologs.SendLogs
 func (s *server) SendLogs(ctx context.Context, in *pb.Log) (*pb.Empty, error) {
 	log.Printf("Received: %v", in.GetBlockID())
 	log.Printf("Sent By: %v", in.GetLocalpeer())
@@ -33,38 +33,16 @@ func (s *server) SendLogs(ctx context.Context, in *pb.Log) (*pb.Empty, error) {
 	log.Printf("ReceivedAt: %v", in.GetReceivedAt())
 	log.Printf("BlockRequestedAt: %v", in.GetBlockRequestedAt())
 	log.Printf("Duplicate: %v", in.GetDuplicate())
-
-	/* var sentAt *timestamppb.Timestamp
-	var receivedAt *timestamppb.Timestamp
-	var blockRequestedAt *timestamppb.Timestamp */
-	//var duplicate int64
-
-	/* if in.GetSentAt() != nil {
-		sentAt = in.GetSentAt()
-	}
-
-	if in.GetReceivedAt() != nil {
-		receivedAt = in.GetReceivedAt()
-	}
-
-	if in.GetBlockRequestedAt() != nil {
-		blockRequestedAt = in.GetBlockRequestedAt()
-	}
- */
-	/* if in.GetDuplicate() != true{
-		duplicate = 0
-	}else{
-		duplicate = 1
-	}  */
 	 
 	recordReceivedLogs(s.database, in.GetBlockID(), in.GetLocalpeer(), in.GetRemotepeer(), in.GetSentAt(), in.GetReceivedAt(), in.GetBlockRequestedAt(), in.GetDuplicate())
 
 	return &(pb.Empty{}), nil
 }
 
-// Save info in the BD
+// Save the received logs in the BD
 func recordReceivedLogs( dbCon sql.DB, blockId string, localpeer string, remotepeer string, sentAt *timestamppb.Timestamp, receivedAt *timestamppb.Timestamp, blockRequestedAt *timestamppb.Timestamp, duplicate bool){
 
+	//convert timestamps to DB format with milliseconds 
 	sentAtAsTime := fmt.Sprintf("%v", sentAt.AsTime().Format("2006-01-02 15:04:05.000"))
 	receivedAtAsTime := fmt.Sprintf("%v", receivedAt.AsTime().Format("2006-01-02 15:04:05.000"))
 	blockRequestedAtAsTime := fmt.Sprintf("%v", blockRequestedAt.AsTime().Format("2006-01-02 15:04:05.000"))
