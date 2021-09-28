@@ -8,11 +8,14 @@ import (
 
 	"google.golang.org/grpc"
 	pb "github.com/Matias-Correia/go-test_server/server/protologs"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 )
 
 const (
-	address     = "localhost:50051"
+	address = "localhost:50051"
 	defaultName = "world"
+	localpeer = "Matias"
+	remotepeer = "Test"
 )
 
 func main() {
@@ -31,7 +34,7 @@ func main() {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	_, err = c.SendLogs(ctx, &pb.Log{BlockID: name, RequestDelay: 100, BlockDelay:200, BlockDelivered: true})
+	_, err = c.SendLogs(ctx, &pb.Log{BlockID: name, Localpeer: localpeer, Remotepeer:remotepeer, SentAt: timestamppb.Now(), ReceivedAt:timestamppb.Now(), BlockRequestedAt:timestamppb.Now(), Duplicate: false})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}

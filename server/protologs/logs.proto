@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/Matias-Correia/go-test_server/protologs";
 
 
@@ -16,7 +18,10 @@ message Empty{}
 // Log definition
 message Log{
 	string blockID = 1;
-	int64 request_delay = 2;
-	int64 block_delay = 3;
-	bool blockDelivered = 4;
+	string localpeer = 2;
+	string remotepeer = 3;
+	google.protobuf.Timestamp sentAt = 4;
+	google.protobuf.Timestamp receivedAt = 5;
+	google.protobuf.Timestamp blockRequestedAt = 6;
+	bool duplicate = 7;
 }
