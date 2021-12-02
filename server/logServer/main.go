@@ -53,27 +53,27 @@ func recordReceivedLogs( dbCon sql.DB, blockId string, localpeer string, remotep
 	if sentAt == nil{
 		if receivedAt == nil{
 			if blockRequestedAt == nil{
-				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,Duplicate) VALUES('%s','%s','%s','%v','%v','%v',%t)",blockId,localpeer,remotepeer,duplicate)
+				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,Duplicate) VALUES('%s','%s','%s',%t)",blockId,localpeer,remotepeer,duplicate)
 			}else{
-				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,BlockRequestedAt,Duplicate) VALUES('%s','%s','%s','%v','%v','%v',%t)",blockId,localpeer,remotepeer,blockRequestedAtAsTime,duplicate)
+				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,BlockRequestedAt,Duplicate) VALUES('%s','%s','%s','%v',%t)",blockId,localpeer,remotepeer,blockRequestedAtAsTime,duplicate)
 			}
 		}else{
 			if blockRequestedAt == nil{
-				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,ReceivedAt,Duplicate) VALUES('%s','%s','%s','%v','%v','%v',%t)",blockId,localpeer,remotepeer,receivedAtAsTime,duplicate)
+				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,ReceivedAt,Duplicate) VALUES('%s','%s','%s','%v',%t)",blockId,localpeer,remotepeer,receivedAtAsTime,duplicate)
 			}else{
-				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,ReceivedAt,BlockRequestedAt,Duplicate) VALUES('%s','%s','%s','%v','%v','%v',%t)",blockId,localpeer,remotepeer,receivedAtAsTime,blockRequestedAtAsTime,duplicate)
+				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,ReceivedAt,BlockRequestedAt,Duplicate) VALUES('%s','%s','%s','%v','%v',%t)",blockId,localpeer,remotepeer,receivedAtAsTime,blockRequestedAtAsTime,duplicate)
 			}
 		}
 	}else{
 		if receivedAt == nil{
 			if blockRequestedAt == nil{
-				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,SentAt,Duplicate) VALUES('%s','%s','%s','%v','%v','%v',%t)",blockId,localpeer,remotepeer,sentAtAsTime,duplicate)
+				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,SentAt,Duplicate) VALUES('%s','%s','%s','%v',%t)",blockId,localpeer,remotepeer,sentAtAsTime,duplicate)
 			}else{
-				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,SentAt,BlockRequestedAt,Duplicate) VALUES('%s','%s','%s','%v','%v','%v',%t)",blockId,localpeer,remotepeer,sentAtAsTime,blockRequestedAtAsTime,duplicate)
+				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,SentAt,BlockRequestedAt,Duplicate) VALUES('%s','%s','%s','%v','%v',%t)",blockId,localpeer,remotepeer,sentAtAsTime,blockRequestedAtAsTime,duplicate)
 			}
 		}else{
 			if blockRequestedAt == nil{
-				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,SentAt,ReceivedAt,Duplicate) VALUES('%s','%s','%s','%v','%v','%v',%t)",blockId,localpeer,remotepeer,sentAtAsTime,receivedAtAsTime,duplicate)
+				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,SentAt,ReceivedAt,Duplicate) VALUES('%s','%s','%s','%v','%v',%t)",blockId,localpeer,remotepeer,sentAtAsTime,receivedAtAsTime,duplicate)
 			}else{
 				query = fmt.Sprintf("INSERT INTO test_logs (BlockID,LocalPeer,RemotePeer,SentAt,ReceivedAt,BlockRequestedAt,Duplicate) VALUES('%s','%s','%s','%v','%v','%v',%t)",blockId,localpeer,remotepeer,sentAtAsTime,receivedAtAsTime,blockRequestedAtAsTime,duplicate)
 			}
