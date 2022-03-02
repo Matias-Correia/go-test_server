@@ -111,7 +111,6 @@ func main() {
 	s := grpc.NewServer()
 	pb.RegisterLogTestDataServer(s, &server{database: db})
 	if err := s.Serve(lis); err != nil {
-		defer db.Close()
 		log.Fatalf("failed to serve: %v", err)
 	}
 }
