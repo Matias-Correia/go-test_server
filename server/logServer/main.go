@@ -108,6 +108,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	db := openDataBaseConnection()
+	db.SetMaxIdleConns(0)
 	s := grpc.NewServer()
 	pb.RegisterLogTestDataServer(s, &server{database: db})
 	if err := s.Serve(lis); err != nil {
