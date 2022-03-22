@@ -34,7 +34,7 @@ func (s *server) SendLogs(ctx context.Context, in *pb.Log) (*pb.Empty, error) {
 	log.Printf("BlockRequestedAt: %v", in.GetBlockRequestedAt())
 	log.Printf("Duplicate: %v", in.GetDuplicate())
 	 
-	recordReceivedLogs(s.database, in.GetBlockID(), in.GetLocalpeer(), in.GetRemotepeer(), in.GetSentAt(), in.GetReceivedAt(), in.GetBlockRequestedAt(), in.GetDuplicate())
+	//recordReceivedLogs(s.database, in.GetBlockID(), in.GetLocalpeer(), in.GetRemotepeer(), in.GetSentAt(), in.GetReceivedAt(), in.GetBlockRequestedAt(), in.GetDuplicate())
 
 	return &(pb.Empty{}), nil
 }
@@ -111,7 +111,7 @@ func main() {
 	s := grpc.NewServer()
 	pb.RegisterLogTestDataServer(s, &server{database: db})
 	if err := s.Serve(lis); err != nil {
-		defer db.Close()
 		log.Fatalf("failed to serve: %v", err)
 	}
+	defer db.Close()
 }
